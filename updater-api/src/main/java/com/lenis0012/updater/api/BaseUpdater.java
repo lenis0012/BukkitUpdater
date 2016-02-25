@@ -143,6 +143,7 @@ public abstract class BaseUpdater implements Updater {
         try {
             URL url = new URL(downloadURL);
             URLConnection connection = url.openConnection();
+            connection.setUseCaches(false);
             connection.addRequestProperty("User-Agent", getClass().getSimpleName() + "/v1 (by lenis0012)");
             if(apiKey != null && withApiKey) {
                 connection.addRequestProperty("X-API-Key", apiKey);
