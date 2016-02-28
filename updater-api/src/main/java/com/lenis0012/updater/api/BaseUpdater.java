@@ -63,6 +63,7 @@ public abstract class BaseUpdater implements Updater {
         File destination = new File(Bukkit.getUpdateFolderFile(), pluginFile.getName());
         try {
             download(newVersion.getDownloadURL(), destination);
+            this.currentVersion = newVersion.getName();
             return null;
         } catch(IOException e) {
             return e.getMessage();
