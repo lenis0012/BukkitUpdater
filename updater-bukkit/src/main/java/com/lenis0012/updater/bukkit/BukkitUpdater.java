@@ -13,21 +13,38 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
 
 public class BukkitUpdater extends BaseUpdater {
     private static final String BASE_URL = "https://api.curseforge.com";
     private static final String API_FILES = "/servermods/files?projectIds=";
-    private final int projectId;
+    private static final String API_SEARCH = "/servermods/projects?search=";
+    private int projectId = -1;
 
-    public BukkitUpdater(Plugin plugin, File pluginFile, String projectId, boolean enabled) {
+    public BukkitUpdater(Plugin plugin, File pluginFile, final String projectId, boolean enabled) {
         super(plugin, pluginFile);
         this.enabled = enabled;
-        this.projectId = Integer.parseInt(projectId);
+        if(projectId.startsWith("slug:")) {
+            Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    readSlug(projectId.substring("slug:".length()));
+                }
+            });
+        } else {
+            this.projectId = Integer.parseInt(projectId);
+        }
+
         loadGravityFile(false);
     }
 
     @Override
     protected void read() {
+        if(projectId < 0) {
+            return; // Still reading slug...
+        }
+
         JsonElement json = readJsonFromURL(BASE_URL + API_FILES + projectId, true);
         if(json == null) {
             return;
@@ -55,6 +72,16 @@ public class BukkitUpdater extends BaseUpdater {
     @Override
     public boolean isBukkitUpdater() {
         return true;
+    }
+
+    private void readSlug(String slug) {
+        JsonArray projects = readJsonFromURL(BASE_URL + API_SEARCH + slug, true).getAsJsonArray();
+        if(projects.size() < 1) {
+            return;
+        }
+
+        JsonObject project = projects.get(0).getAsJsonObject();
+        this.projectId = project.get("id").getAsInt();
     }
 
     /**
