@@ -50,10 +50,25 @@ public class BukkitUpdater extends BaseUpdater {
             return;
         }
 
+        // Read latest file in channel
         JsonArray files = json.getAsJsonArray();
-        JsonObject latest = files.get(files.size() - 1).getAsJsonObject();
+        JsonObject latest = null;
+        ReleaseType type = null;
+        for(int i = files.size() - 1; i >= 0; i--) {
+            JsonObject file = files.get(i).getAsJsonObject();
+            type = ReleaseType.valueOf(file.get("releaseType").getAsString().toUpperCase());
+            if(type.ordinal() >= channel.ordinal()) {
+                latest = file;
+                break;
+            }
+        }
+        if(latest == null) {
+            // No version was found in channel
+            return;
+        }
+
+        // Parse
         String name = latest.get("name").getAsString();
-        ReleaseType type = ReleaseType.valueOf(latest.get("releaseType").getAsString().toUpperCase());
         String serverVersion = latest.get("gameVersion").getAsString();
         String downloadURL = latest.get("downloadUrl").getAsString();
         this.newVersion = new Version(name, type, serverVersion, downloadURL);

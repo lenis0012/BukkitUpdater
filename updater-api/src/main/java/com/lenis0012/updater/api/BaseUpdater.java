@@ -30,12 +30,23 @@ public abstract class BaseUpdater implements Updater {
     protected boolean isOutdated = false;
     protected long nextUpdateCheck = 0L;
     protected ItemStack changelog;
+    protected ReleaseType channel;
 
     public BaseUpdater(Plugin plugin, File pluginFile) {
         this.plugin = plugin;
         this.jsonParser = new JsonParser();
         this.pluginFile = pluginFile;
         this.currentVersion = plugin.getDescription().getVersion();
+    }
+
+    @Override
+    public ReleaseType getChannel() {
+        return channel;
+    }
+
+    @Override
+    public void setChannel(ReleaseType channel) {
+        this.channel = channel;
     }
 
     public boolean hasUpdate() {

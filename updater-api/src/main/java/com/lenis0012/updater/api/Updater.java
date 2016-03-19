@@ -38,4 +38,18 @@ public interface Updater {
      * @return True if bukkit updater, false otherwise
      */
     boolean isBukkitUpdater();
+
+    /**
+     * Get the release channel this updater runs on.
+     *
+     * @return
+     */
+    ReleaseType getChannel();
+
+    /**
+     * Set the release channel this updater runs on.
+     *
+     * @param channel
+     */
+    void setChannel(ReleaseType channel);
 }

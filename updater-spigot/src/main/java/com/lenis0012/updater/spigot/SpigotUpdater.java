@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
+import java.util.List;
 
 public class SpigotUpdater extends BaseUpdater {
     private final String versionURL;
@@ -28,10 +29,16 @@ public class SpigotUpdater extends BaseUpdater {
     protected void read() {
         JsonElement json = readJsonFromURL(versionURL, false);
         if(json == null) {
+            // Not present (or other error)
             return;
         }
 
         JsonObject version = json.getAsJsonObject();
+        if(version.has("release")) {
+            // Uses new format
+            version = readChannel(version);
+        }
+
         String name = version.get("name").getAsString();
         ReleaseType type = ReleaseType.valueOf(version.get("type").getAsString().toUpperCase());
         String serverVersion = version.get("gameVersion").getAsString();
@@ -53,6 +60,30 @@ public class SpigotUpdater extends BaseUpdater {
         }
         return result;
     }
+
+    /**
+     * Read latest version in channel.
+     *
+     * @param versions versions data
+     * @return Latest version in channel
+     */
+    private JsonObject readChannel(JsonObject versions) {
+        JsonObject latest = null;
+        String newest = null;
+        for(int i = ReleaseType.RELEASE.ordinal(); i >= channel.ordinal(); i--) {
+            String base = ReleaseType.values()[i].toString().toLowerCase();
+            if(!versions.has(base)) continue; // Version type not present.
+            JsonObject version = versions.get(base).getAsJsonObject();
+            String name = version.get("name").getAsString();
+            if(latest == null || compareVersions(newest, name)) {
+                latest = version;
+                newest = name;
+            }
+        }
+
+        return latest;
+    }
+
 
     /**
      * Read changelog from file inside of jar called changelog.json.
