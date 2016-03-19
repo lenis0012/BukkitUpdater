@@ -14,13 +14,19 @@ public class UpdaterFactory {
 
     private final Plugin plugin;
     private String updaterInfo;
-    private Class<? extends Updater> updaterClass;
+    private Class<?> updaterClass;
 
     public UpdaterFactory(Plugin plugin) {
+        this(plugin, PACKAGE_BASE);
+    }
+
+    public UpdaterFactory(Plugin plugin, String packageBase) {
         this.plugin = plugin;
+
+        // Find updater for platform
         List<String> platforms = Arrays.asList(PACKAGE_BUKKIT, PACKAGE_SPIGOT);
         for(String platform : platforms) {
-            this.updaterClass = (Class<? extends Updater>) classExists(PACKAGE_BASE + platform);
+            this.updaterClass = classExists(packageBase + platform);
             if(updaterClass != null) {
                 break;
             }
@@ -32,6 +38,7 @@ public class UpdaterFactory {
             return;
         }
 
+        // Read updater info
         InputStream input = plugin.getResource("updater.txt");
         BufferedReader reader = null;
         try {
@@ -60,7 +67,7 @@ public class UpdaterFactory {
     public Updater newUpdater(File pluginFile, boolean enabled) {
         if(updaterClass == null || updaterInfo == null) return null;
         try {
-            return updaterClass.getConstructor(Plugin.class, File.class, String.class, boolean.class).newInstance(plugin, pluginFile, updaterInfo, enabled);
+            return (Updater) updaterClass.getConstructor(Plugin.class, File.class, String.class, boolean.class).newInstance(plugin, pluginFile, updaterInfo, enabled);
         } catch(Exception e) {
             plugin.getLogger().log(Level.WARNING, "Couldn't initiate updater", e);
             return null;
