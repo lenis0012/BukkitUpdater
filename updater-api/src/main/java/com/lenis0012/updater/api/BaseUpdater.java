@@ -30,7 +30,7 @@ public abstract class BaseUpdater implements Updater {
     protected boolean isOutdated = false;
     protected long nextUpdateCheck = 0L;
     protected ItemStack changelog;
-    protected ReleaseType channel;
+    protected ReleaseType channel = ReleaseType.RELEASE;
 
     public BaseUpdater(Plugin plugin, File pluginFile) {
         this.plugin = plugin;
