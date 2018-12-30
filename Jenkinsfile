@@ -4,8 +4,7 @@ pipeline {
     stage('Prepare') {
       steps {
         withMaven(jdk: 'JDK 8', maven: 'Maven 3', publisherStrategy: 'EXPLICIT') {
-          sh '''cd updater-api
-&& mvn clean'''
+          sh 'cd updater-api && mvn clean'
         }
 
       }
