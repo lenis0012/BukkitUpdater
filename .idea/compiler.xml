@@ -6,10 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="updater-api" />
         <module name="updater-bukkit" />
-        <module name="updater-parent" />
         <module name="updater-spigot" />
+        <module name="updater-api" />
       </profile>
     </annotationProcessing>
   </component>

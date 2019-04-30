@@ -1,2 +1,12 @@
 language: java
 jdk: openjdk8
+deploy:
+  provider: bintray
+  file: ".bintray.json"
+  user: "lenis0012"
+  skip_cleanup: true
+  key:
+    secure: rWEj3uuyipCoKjOJxjV6E3kz9qB2OLZZkpUPho8NMyo4JtnGYB/QKNRSdkEN3G/rG0utHfpucwp9HGo37viOC3nVQiwPm7fj20lCYFFAetbx51fSBtGwAqj0k1aNNy7AUVtSSxEfIUPgQg3qp/DROX5kf/RHEm3Qq0gqtTOcVbkYoLKbVaS6n8cyoTmJr71+IcO6lx8zDsQso9I8aDyDdwnkA+bQY6CSbAiz5Mlw1G+if88MvT58qVilgmrgO77XobuNaTdGNpz25idZpjLejLnYTGTfubl8/oHE7lth3joXzTm2WlDdmUWQgiexnpK1Z5Y6kj7UE3ML28sAXnKvQLw2e0zN6DwriC21y0eMNGlfhLJo2rTVznSQtWVgFfEE2vNSlvfrW5aOFCUIk+Q9O2eBqz73SJ2xX42zGjmApNFjHWd8xxsFxTsNkZx6xuQ0N91GitHwEBrV7XHug8OcxLv5Keicj/xH4nwDkziLaWrvG5XcWDxTVKeYgt2NPhPwoBe2S7zzToeOvZBRVeWt3kQUVYVBKZbWFr6S6RxRwtbayWyH0tS+EAb68T9ISZrxLuhv4ag3nnnQfwery62YlKom/GQVFuQjhsgB3/cP4jrUYnIZWiZs0dHXP6JSlow3wtiuUdtAlp0g74kRCdOKgqRMyZdYdecSxOqlvp+hCag=
+  on:
+    tags: true
+    all_branches: true
