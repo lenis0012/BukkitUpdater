@@ -1,9 +1,10 @@
 language: java
 jdk: openjdk8
+script: mvn install
 deploy:
   provider: bintray
-  file: ".bintray.json"
-  user: lenis0012
+  file: "descriptor.json"
+  user: "lenis0012"
   skip_cleanup: true
   key:
     secure: CN7OKbqq2WzE3Ow4I5/7EDt6hagtZZ75Hlwvne3u7zXDSZcV0JdDyVpyeTh9v5oz9elXaBda4cy7qlNXFOGTnecGVsUklL+GKYvPQJuSqYIPjeslKnhUEu7ZY7ixA3u/Dc+gKAKWzT+Wtryj5RSbleTfoqY2GOs8A+dmc3xmpTyLJ9HD0OcDRKH02B24C6ANINxYj8dYjzTwwlLmKdaCd7wNopJK3X6qe+cS3f0cFFu5Ad6O71TkGod5m0pzQNYcJQfk+oFeM4RCd7ge6ipEVmcXwIYDXHNQLUFu4+n/LxszRjIDRCUXG/eUsiNaAN3V+n3I1rykEorUaPszEGaaASTAQjW+yUpUs5zGxm5SwgSLLfVeePR1XZ68ZPcfMgbCUMqq/zlq9J/M3xPhOmMatO+Txpadep/Etc4nJWfhKDXsSbMBx/9dSuD6upj8sxIgJRAdxavT94WD7BBpgq4Aq/oPNi+Ol5uLQDgGnJnJpCf18QhXo0V0p4BTg7IhVUczFGDEYrUKatdvmCoOjSdD2lG1a6DwX8Bz90W7qqzTar9In7nCgdRz4+oix25C4dN8B5/7oMR5SIeeKVe7Ffenf03NF4G3G2xZhf/ZJCuq36BbJ5TzCqBc4em0bu0dt0AsiWMjUzy2UWgvLINCgWYV489sJPcklv7Eqm5qmH5F2dg=

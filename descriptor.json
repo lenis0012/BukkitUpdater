@@ -12,9 +12,9 @@
   },
 
   "version": {
-    "name": "1.0",
+    "name": "1.0.1",
     "released": "2019-04-30",
-    "vcs_tag": "v1.0",
+    "vcs_tag": "v1.0.1",
     "gpgSign": false
   },
 
