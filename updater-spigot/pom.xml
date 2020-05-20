@@ -7,7 +7,8 @@
     <parent>
         <groupId>com.lenis0012.updater</groupId>
         <artifactId>updater-parent</artifactId>
-        <version>1.0</version>
+        <version>1.1</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>updater-spigot</artifactId>
