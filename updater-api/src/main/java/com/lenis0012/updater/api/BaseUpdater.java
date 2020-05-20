@@ -23,6 +23,7 @@ public abstract class BaseUpdater implements Updater {
     protected final JsonParser jsonParser;
     protected final File pluginFile;
     protected String currentVersion;
+    protected boolean snapshot;
     protected boolean enabled;
     protected String apiKey;
 
@@ -37,6 +38,7 @@ public abstract class BaseUpdater implements Updater {
         this.jsonParser = new JsonParser();
         this.pluginFile = pluginFile;
         this.currentVersion = plugin.getDescription().getVersion();
+        this.snapshot = currentVersion.contains("SNAPSHOT");
     }
 
     @Override
@@ -236,7 +238,9 @@ public abstract class BaseUpdater implements Updater {
     protected boolean compareVersions(String oldVersion, String newVersion) {
         int oldId = matchLength(oldVersion, newVersion);
         int newId = matchLength(newVersion, oldVersion);
-        return newId > oldId;
+        return snapshot ?
+                newId >= oldId :
+                newId > oldId;
     }
 
     private int matchLength(String a, String b) {
